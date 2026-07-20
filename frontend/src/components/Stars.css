@@ -1,0 +1,248 @@
+.stars-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 50% 50%, #080812 0%, #030308 100%);
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Deep space ambient glow */
+.nebula {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+.nebula-cyan {
+  top: 10%;
+  left: 15%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, #06b6d4 0%, transparent 70%);
+}
+
+.nebula-violet {
+  bottom: 20%;
+  right: 10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
+}
+
+.nebula-blue {
+  top: 40%;
+  right: 30%;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, #3b82f6 0%, transparent 70%);
+}
+
+/* Atmospheric glow at bottom mimicking earth observation */
+.horizon-glow {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 25vh;
+  background: linear-gradient(to top, rgba(16, 16, 32, 0.4) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Stars */
+.star {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0;
+  animation: starTwinkle 4s infinite ease-in-out;
+}
+
+.white-star {
+  background: #ffffff;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+}
+
+.blue-star {
+  background: #bae6fd;
+  box-shadow: 0 0 5px rgba(56, 189, 248, 0.9);
+}
+
+.yellow-star {
+  background: #fef08a;
+  box-shadow: 0 0 4px rgba(234, 179, 8, 0.7);
+}
+
+@keyframes starTwinkle {
+  0%, 100% {
+    opacity: 0.15;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.2);
+  }
+}
+
+/* Shooting Stars */
+.shooting-star {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 2px;
+  background: linear-gradient(-45deg, rgba(96, 165, 250, 1), rgba(0, 0, 244, 0));
+  border-radius: 999px;
+  filter: drop-shadow(0 0 6px rgba(147, 197, 253, 1));
+  animation: tail 4s ease-in-out infinite, shooting 4s ease-in-out infinite;
+  transform: rotate(-45deg);
+  opacity: 0;
+}
+
+.shooting-star-1 {
+  top: 10%;
+  left: 30%;
+  animation-delay: 1.5s;
+  animation-duration: 5.5s;
+}
+
+.shooting-star-2 {
+  top: 30%;
+  left: 70%;
+  animation-delay: 4.2s;
+  animation-duration: 7s;
+}
+
+.shooting-star-3 {
+  top: 5%;
+  left: 60%;
+  animation-delay: 8s;
+  animation-duration: 6.5s;
+}
+
+@keyframes tail {
+  0% { width: 0; }
+  10% { width: 80px; }
+  30% { width: 0; }
+  100% { width: 0; }
+}
+
+@keyframes shooting {
+  0% {
+    transform: translateX(0) translateY(0) rotate(-45deg);
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  15% {
+    transform: translateX(250px) translateY(250px) rotate(-45deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(250px) translateY(250px) rotate(-45deg);
+    opacity: 0;
+  }
+}
+
+/* Constellation Overlay */
+.constellations-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: auto; /* Allow mouse events on paths/points */
+}
+
+.constellation-group {
+  cursor: pointer;
+  pointer-events: visiblePainted;
+}
+
+.constellation-line {
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 0.75;
+  transition: stroke 0.4s ease, stroke-width 0.4s ease;
+}
+
+.constellation-group.hovered .constellation-line {
+  stroke: rgba(96, 165, 250, 0.35);
+  stroke-width: 1.25;
+}
+
+.constellation-point {
+  fill: rgba(255, 255, 255, 0.6);
+  transition: fill 0.3s ease, r 0.3s ease;
+}
+
+.constellation-point.major {
+  fill: #bae6fd;
+  filter: drop-shadow(0 0 3px rgba(186, 230, 253, 0.8));
+}
+
+.constellation-halo {
+  fill: rgba(96, 165, 250, 0);
+  stroke: rgba(96, 165, 250, 0);
+  stroke-width: 1px;
+  transition: all 0.3s ease;
+}
+
+.constellation-group.hovered .constellation-point {
+  fill: #ffffff;
+  r: 5px;
+}
+
+.constellation-group.hovered .constellation-point.major {
+  fill: #60a5fa;
+  r: 6.5px;
+}
+
+.constellation-group.hovered .constellation-halo {
+  fill: rgba(96, 165, 250, 0.08);
+  stroke: rgba(96, 165, 250, 0.25);
+  transform: scale(1.15);
+  transform-origin: center;
+}
+
+/* Constellation Label HUD */
+.constellation-hud {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  background: rgba(10, 10, 15, 0.65);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 14px 20px;
+  border-radius: 12px;
+  color: #ffffff;
+  z-index: 10;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  animation: hudFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hud-line-glow {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  width: 80%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+@keyframes hudFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
